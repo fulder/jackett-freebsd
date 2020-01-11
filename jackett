@@ -32,7 +32,7 @@ jackett_update()
     if checkyesno ${rcvar}; then
       echo "Finding latest jackett version"
       fetch -o releases.json https://api.github.com/repos/Jackett/Jackett/releases
-      download_url=$(cat releases.json | jq -r '[.[] | select(.prerelease==false)][0] | [.assets[] | select(.name="Jackett.Binaries.LinuxAMDx64.tar.gz")][0] | .browser_download_url')
+      download_url=$(cat releases.json | jq -r '[.[] | select(.prerelease==false)][0] | [.assets[] | select(.name=="Jackett.Binaries.Mono.tar.gz")][0] | .browser_download_url')
       version=$(cat releases.json | jq -r '[.[] | select(.prerelease==false)][0] | .name')
       rm releases.json
 
@@ -42,11 +42,11 @@ jackett_update()
       jackett_stop
       echo "Updating current jackett"
       rm -rf Jackett
-      tar xzf "Jackett.Binaries.LinuxAMDx64.tar.gz"
+      tar xzf "Jackett.Binaries.Mono.tar.gz"
       rm -rf /usr/local/share/jackett_old
       mv /usr/local/share/jackett /usr/local/share/jackett_old
       mv "./Jackett" /usr/local/share/jackett
-      #rm "Jackett.Binaries.LinuxAMDx64.tar.gz"
+      #rm "Jackett.Binaries.Mono.tar.gz"
       jackett_start
     fi
 }
